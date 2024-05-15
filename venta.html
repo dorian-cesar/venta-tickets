@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicación de Tickets</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        .ticket {
+            margin-top: 20px;
+        }
+        footer {
+           
+          
+            width: 100%;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container  ">
+        <h1 class="text-center">Selecciona tu tipo de viaje</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <button class="btn btn-primary btn-block mt-2" onclick="generarTicket('Corto', 5000)">Viaje Corto - $5000</button>
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-primary btn-block mt-2" onclick="generarTicket('Medio', 7000)">Viaje Medio - $7000</button>
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-primary btn-block mt-2" onclick="generarTicket('Completo', 8000)">Viaje Completo - $8000</button>
+            </div>
+        </div>
+        <div class="row justify-content-center ticket">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Ticket</h2>
+                        <p id="ticketInfo" class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-6">
+                <button id="imprimirTicketBtn" class="btn btn-success btn-block d-none" onclick="guardarTicket()">Imprimir Ticket</button>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <img src="./assets/img/bus.JPG" alt="Bus Image" style="max-width: 100%; height: auto;">
+    </footer>
+
+    <!-- Bootstrap JS y jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+          var ticketData;
+        function generarTicket(tipoViaje, precio) {
+            var Patente="HHHH45";
+            var fecha = new Date().toLocaleString("es-CL");
+            var codigoAleatorio = generarCodigoAleatorio(10);
+            var ticketInfo = "Fecha y hora: " + fecha + "<br>";
+            ticketInfo += "Tipo de viaje: " + tipoViaje + "<br>";
+            ticketInfo += "Precio a pagar: $" + precio + "<br>";
+            ticketInfo += "Código: " + codigoAleatorio +"<br>";
+            ticketInfo += "Patente: " + Patente;
+
+            $("#ticketInfo").html(ticketInfo);
+            $("#imprimirTicketBtn").removeClass("d-none");
+
+            ticketData = {
+                tipo: tipoViaje,
+                precio: precio,
+                codigo: codigoAleatorio,
+                patente:Patente
+            };
+
+        }
+
+        function generarCodigoAleatorio(longitud) {
+            var caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var codigo = '';
+            for (var i = 0; i < longitud; i++) {
+                codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+            }
+            return codigo;
+        }
+
+        function imprimirTicket() {
+            window.print();
+        }
+
+        function guardarTicket() {
+    // Verificar si hay datos de ticket
+    if (!window.ticketData) {
+        alert("No hay datos de ticket para guardar.");
+        return;
+    }
+
+    // Configurar la solicitud fetch
+    fetch('http://localhost/ventaTicket/php/grabarTickets.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(window.ticketData)
+    })
+    .then(response => {
+        // Verificar el estado de la respuesta
+        if (response.ok) {
+            alert("¡El ticket se guardó exitosamente!");
+            // Limpiar los datos del ticket después de guardarlos
+            window.ticketData = null;
+        } else {
+            throw new Error('Error al guardar el ticket.');
+        }
+    })
+    .catch(error => {
+        alert("Error al guardar el ticket: " + error.message);
+    });
+}
+    </script>
+</body>
+</html>
+
