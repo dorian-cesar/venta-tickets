@@ -84,6 +84,9 @@
                 codigo: codigoAleatorio,
                 patente:Patente
             };
+            preData.textContent="";
+
+            preData.textContent='hola amigos';
 
         }
 
@@ -120,6 +123,7 @@
         if (response.ok) {
             alert("¡El ticket se guardó exitosamente!");
             // Limpiar los datos del ticket después de guardarlos
+            printRawBT();
             window.ticketData = null;
         } else {
             throw new Error('Error al guardar el ticket.');
@@ -129,6 +133,17 @@
         alert("Error al guardar el ticket: " + error.message);
     });
 }
+
+async function printRawBT(){
+            if(preData.textContent){
+                var btext = toBT(preData.textContent);
+                // Imprimir a traves de RawBT
+                window.location.href = btext;
+            } else {
+                window.alert("Nada que imprimir");
+                return;
+            }
+        }
     </script>
 </body>
 </html>
