@@ -52,6 +52,7 @@
                 <button id="imprimirTicketBtn" class="btn btn-success btn-block d-none" onclick="guardarTicket()">Imprimir Ticket</button>
             </div>
         </div>
+        <pre id="pre-data"></pre>
     </div>
     <footer>
         <img src="./assets/img/bus.JPG" alt="Bus Image" style="max-width: 100%; height: auto;">
@@ -84,7 +85,7 @@
                 codigo: codigoAleatorio,
                 patente:Patente
             };
-            preData.textContent="";
+            var preData = document.getElementById("pre-data");
 
             preData.textContent += toCenter("Reporte de conducción");
             preData.textContent += toCenter("Últimos 10 minutos");
@@ -138,6 +139,7 @@
 async function printRawBT(){
             if(preData.textContent){
                 var btext = toBT(preData.textContent);
+                console.log(btext);
                 // Imprimir a traves de RawBT
                 window.location.href = btext;
             } else {
