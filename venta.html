@@ -55,6 +55,7 @@
                     <div class="card-body" id="card-body">
                         
                         <p id="ticketInfo" class="card-text"></p>
+                        
                     </div>
                 </div>
             </div>
@@ -81,7 +82,7 @@
         var preData = document.getElementById("pre-data"); // Definido como variable global
 
         function generarTicket(tipoViaje, precio) {
-            var Patente = "HHHH45";
+            var Patente = getParameterByName('patente');
             var fecha = new Date().toLocaleString("es-CL");
             var codigoAleatorio = generarCodigoAleatorio(10);
 
@@ -150,7 +151,7 @@
                 // Imprimir a traves de RawBT
                 window.location.href = btext;
                 preData.textContent="";
-            } else {
+                } else {
                 window.alert("Nada que imprimir");
                 return;
             }
