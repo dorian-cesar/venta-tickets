@@ -78,9 +78,16 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="common.js"></script>
     <script>
+         function getParameterByName(name) {
+                name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+                var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                    results = regex.exec(location.search);
+                return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
         var ticketData;
         var preData = document.getElementById("pre-data"); // Definido como variable global
         var Patente = getParameterByName('patente');
+        console.log(Patente);
         function generarTicket(tipoViaje, precio) {
             
             var fecha = new Date().toLocaleString("es-CL");
