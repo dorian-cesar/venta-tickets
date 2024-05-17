@@ -61,7 +61,7 @@
         <div class="row justify-content-center mt-3">
             <div class="col-md-6">
                 <button id="imprimirTicketBtn" class="btn btn-success btn-block d-none"
-                    onclick="printRawBT()">Imprimir Ticket</button>
+                    onclick="guardarTicket()">Imprimir Ticket</button>
             </div>
         </div>
         <pre id="pre-data"></pre>
@@ -143,6 +143,7 @@
         }
 
         async function printRawBT(){
+           
             if(preData.textContent){
                 var btext = toBT(preData.textContent);
                 // Imprimir a traves de RawBT
