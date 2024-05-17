@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,6 +29,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container  ">
         <div class="contenedor-img">
@@ -61,7 +63,7 @@
         <div class="row justify-content-center mt-3">
             <div class="col-md-6">
                 <button id="imprimirTicketBtn" class="btn btn-success btn-block d-none"
-                    onclick="printRawBT()">Imprimir Ticket</button>
+                    onclick="printRawBT(preData)">Imprimir Ticket</button>
             </div>
         </div>
         <pre id="pre-data"></pre>
@@ -72,17 +74,25 @@
 
     <!-- Bootstrap JS y jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="common.js"></script>
     <script>
         var ticketData;
-        var preData = document.getElementById("pre-data"); // Definido como variable global
-
         function generarTicket(tipoViaje, precio) {
             var Patente = "HHHH45";
             var fecha = new Date().toLocaleString("es-CL");
             var codigoAleatorio = generarCodigoAleatorio(10);
+
+            /*
+            var ticketInfo = "Fecha y hora: " + fecha + "<br>";
+            ticketInfo += "Tipo de viaje: " + tipoViaje + "<br>";
+            ticketInfo += "Precio a pagar: $" + precio + "<br>";
+            ticketInfo += "Código: " + codigoAleatorio +"<br>";
+            ticketInfo += "Patente: " + Patente;
+            */
+            var preData = document.getElementById("pre-data");
 
             preData.textContent = toLeft("BOLETO ");
             preData.textContent += divider;
@@ -90,6 +100,7 @@
             preData.textContent += toLeft("Precio a pagar: " + precio);
             preData.textContent += toLeft("Ticket: " + codigoAleatorio);
             preData.textContent += toLeft("Patente: " + Patente);
+            
 
             $("#ticketInfo").html(preData);
             $("#imprimirTicketBtn").removeClass("d-none");
@@ -100,6 +111,11 @@
                 codigo: codigoAleatorio,
                 patente: Patente
             };
+
+
+
+
+
         }
 
         function generarCodigoAleatorio(longitud) {
@@ -116,11 +132,13 @@
         }
 
         function guardarTicket() {
+            // Verificar si hay datos de ticket
             if (!window.ticketData) {
                 alert("No hay datos de ticket para guardar.");
                 return;
             }
 
+            // Configurar la solicitud fetch
             fetch('https://interurbano.wit.la/venta-tickets/php/grabarTickets.php', {
                 method: 'POST',
                 headers: {
@@ -129,8 +147,11 @@
                 body: JSON.stringify(window.ticketData)
             })
                 .then(response => {
+                    // Verificar el estado de la respuesta
                     if (response.ok) {
                         alert("¡El ticket se guardó exitosamente!");
+                        // Limpiar los datos del ticket después de guardarlos
+                        
                         printRawBT();
                         window.ticketData = null;
                     } else {
@@ -142,16 +163,10 @@
                 });
         }
 
-        async function printRawBT(){
-            if(preData.textContent){
-                var btext = toBT(preData.textContent);
-                // Imprimir a traves de RawBT
-                window.location.href = btext;
-            } else {
-                window.alert("Nada que imprimir");
-                return;
-            }
+         function printRawBT(preData) {
+            console.log(preData.textContent);
         }
     </script>
 </body>
+
 </html>
