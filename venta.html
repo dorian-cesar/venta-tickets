@@ -80,9 +80,9 @@
     <script>
         var ticketData;
         var preData = document.getElementById("pre-data"); // Definido como variable global
-
+        var Patente = getParameterByName('patente');
         function generarTicket(tipoViaje, precio) {
-            var Patente = getParameterByName('patente');
+            
             var fecha = new Date().toLocaleString("es-CL");
             var codigoAleatorio = generarCodigoAleatorio(10);
 
