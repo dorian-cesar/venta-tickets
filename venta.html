@@ -88,6 +88,7 @@
         var preData = document.getElementById("pre-data"); // Definido como variable global
         var Patente = getParameterByName('patente');
         console.log(Patente);
+        console.log(location.search);
         function generarTicket(tipoViaje, precio) {
             
             var fecha = new Date().toLocaleString("es-CL");
