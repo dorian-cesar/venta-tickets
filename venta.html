@@ -26,6 +26,9 @@
             align-items: center;
             margin-bottom: 20px;
         }
+        #card-body {
+            min-height: 160px;
+        }
     </style>
 </head>
 <body>
@@ -33,7 +36,7 @@
         <div class="contenedor-img">
             <img src="assets/img/Logo.svg" alt="">
         </div>
-        <h1 class="text-center">Selecciona tu tipo de viaje</h1>
+        <h3 class="text-center">Selecciona tu tipo de viaje</h3>
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <button class="btn btn-primary btn-block mt-2" onclick="generarTicket('Corto', 5000)">Viaje Corto -
@@ -51,7 +54,7 @@
         <div class="row justify-content-center ticket">
             <div class="col-md-6">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" id="card-body">
                         
                         <p id="ticketInfo" class="card-text"></p>
                     </div>
