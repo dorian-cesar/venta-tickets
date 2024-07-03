@@ -48,6 +48,7 @@
                 <button class="btn btn-primary btn-block mt-2" onclick="generarTicket('Completo', 8000)">Viaje Completo
                     - $8000</button>
             </div>
+            <div class="mt-3" id="resultado"></div>
         </div>
         <div class="row justify-content-center ticket">
             <div class="col-md-6">
@@ -102,6 +103,13 @@
             preData.textContent += toLeft("Precio a pagar: " + precio);
             preData.textContent += toLeft("Ticket: " + codigoAleatorio);
             preData.textContent += toLeft("Patente: " + Patente);
+
+          mensaje='tramo: '+tipoViaje +'-- valor: ' +precio;
+          //mostrarAlerta(mensaje);
+
+          alert(mensaje);
+
+         
 
             $("#ticketInfo").html(preData);
             $("#imprimirTicketBtn").removeClass("d-none");
@@ -166,6 +174,14 @@
                 return;
             }
         }
+
+        function mostrarAlerta( mensaje) {
+                var alerta = $('<div class="alert alert-success">' + mensaje + '</div>');
+                $('#resultado').html(alerta);
+                setTimeout(function() {
+                    $('#resultado').html('');
+                }, 2000); // Desaparece después de 3 segundos
+            }
     </script>
 </body>
 </html>
