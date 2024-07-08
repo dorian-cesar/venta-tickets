@@ -97,24 +97,12 @@
             var fecha = new Date().toLocaleString("es-CL");
             var codigoAleatorio = generarCodigoAleatorio(10);
 
-            preData ='<h3>Boleto</h3>';
-            preData +='<hr>';
-            preData +='<p>Fecha: '+ fecha+ '</p>';
-            preData +='<p>Precio a Pagar: $'+ precio + '</p>';
-            preData +='<p>Ticket: '+ codigoAleatorio + '</p>';
-            preData +='<p>Patente: '+ Patente + '</p>';
-
-          /*  preData.textContent += divider;
+            preData.textContent = toLeft("BOLETO ");
+            preData.textContent += divider;
             preData.textContent += toLeft("Fecha: " + fecha);
             preData.textContent += toLeft("Precio a pagar: " + precio);
             preData.textContent += toLeft("Ticket: " + codigoAleatorio);
             preData.textContent += toLeft("Patente: " + Patente);
-        */
-
-dataXML='<xmp  style="display:none;" >'+preData +'</xmp>';
-
-var mensaje='';
-
 
           mensaje='tramo: '+tipoViaje +'-- valor: ' +precio;
           //mostrarAlerta(mensaje);
@@ -124,10 +112,6 @@ var mensaje='';
          
 
             $("#ticketInfo").html(preData);
-
-
-
-
             $("#imprimirTicketBtn").removeClass("d-none");
 
             ticketData = {
@@ -148,9 +132,7 @@ var mensaje='';
         }
 
         function imprimirTicket() {
-           // window.print();
-            //window.location='printerplus://send?text='+dataXML;
-            alert('hola)');
+            window.print();
         }
 
         function guardarTicket() {
@@ -182,12 +164,10 @@ var mensaje='';
 
         async function printRawBT(){
            
-            if(preData){
-                //var btext = toBT(preData.textContent);
+            if(preData.textContent){
+                var btext = toBT(preData.textContent);
                 // Imprimir a traves de RawBT
-                //window.location.href = btext;
-                window.location='printerplus://send?text='+dataXML;
-                alert(dataXML);
+                window.location.href = btext;
                 preData.textContent="";
                 } else {
                 window.alert("Nada que imprimir");
