@@ -56,6 +56,13 @@
                     <div class="card-body" id="card-body">
                         
                         <p id="ticketInfo" class="card-text"></p>
+                        <xmp id="report" style="display: none;">
+                            <h4>Boleto</h4>
+                            <p>Ticket</p>
+                            <p>tramo</p>
+                            <p>valor</p>
+                            <p>etc...</p>
+                        </xmp>
                         
                     </div>
                 </div>
@@ -104,16 +111,11 @@
             preData +='<p>Ticket: '+ codigoAleatorio + '</p>';
             preData +='<p>Patente: '+ Patente + '</p>';
 
-          /*  preData.textContent += divider;
-            preData.textContent += toLeft("Fecha: " + fecha);
-            preData.textContent += toLeft("Precio a pagar: " + precio);
-            preData.textContent += toLeft("Ticket: " + codigoAleatorio);
-            preData.textContent += toLeft("Patente: " + Patente);
-        */
+         
 
      
 
-dataXML='<xmp id="report" style="display:none;" >'+preData +'</xmp>';
+
 
 var mensaje='';
 
@@ -149,11 +151,7 @@ var mensaje='';
             return codigo;
         }
 
-        function imprimirTicket() {
-           // window.print();
-            //window.location='printerplus://send?text='+dataXML;
-            alert('hola)');
-        }
+   
 
         function guardarTicket() {
             if (!window.ticketData) {
@@ -171,7 +169,7 @@ var mensaje='';
                 .then(response => {
                     if (response.ok) {
                         alert("¡El ticket se guardó exitosamente!");
-                        printRawBT();
+                        window.location='printerplus://send?text='+document.getElementById('report').innerHTML;
                         window.ticketData = null;
                     } else {
                         throw new Error('Error al guardar el ticket.');
@@ -184,30 +182,9 @@ var mensaje='';
 
   
    
-        async function printRawBT(){
-           
-            if(preData){
-                //var btext = toBT(preData.textContent);
-                // Imprimir a traves de RawBT
-                //window.location.href = btext;
-                window.location='printerplus://send?text='+dataXML;
-                //window.location='printerplus://send?text='+document.getElementById('report').innerHTML;
-                
-                alert(dataXML);
-                preData.textContent="";
-                } else {
-                window.alert("Nada que imprimir");
-                return;
-            }
-        }
+        
 
-        function mostrarAlerta( mensaje) {
-                var alerta = $('<div class="alert alert-success">' + mensaje + '</div>');
-                $('#resultado').html(alerta);
-                setTimeout(function() {
-                    $('#resultado').html('');
-                }, 2000); // Desaparece después de 3 segundos
-            }
+        
     </script>
 </body>
 </html>
