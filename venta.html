@@ -54,27 +54,22 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body" id="card-body">
-                        
                         <p id="ticketInfo" class="card-text"></p>
-                        <xmp id="report" style="display: none;">
-                            <h4>Boleto</h4>
-                            <p>Ticket</p>
-                            <p>tramo</p>
-                            <p>valor</p>
-                            <p>etc...</p>
-                        </xmp>
-                        
+                        <div id="report" style="display: block;">
+                            <h4>Boleto <span id="patente"></span></h4>
+                            <p>Ticket <span id="ticket"></span></p>
+                            <p>valor <span id="precio"></span></p>
+                            <p>fecha <span id="fecha"></span></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row justify-content-center mt-3">
             <div class="col-md-6">
-                <button id="imprimirTicketBtn" class="btn btn-success btn-block d-none"
-                    onclick="guardarTicket()">Imprimir Ticket</button>
-                    <a href="https://control-ruta.netlify.app/" class="btn btn-warning btn-block ">Volver al menu principal </a>
+                <button id="imprimirTicketBtn" class="btn btn-success btn-block d-none" onclick="guardarTicket()">Imprimir Ticket</button>
+                <a href="https://control-ruta.netlify.app/" class="btn btn-warning btn-block ">Volver al menu principal </a>
             </div>
-            
         </div>
         <pre id="pre-data"></pre>
     </div>
@@ -88,49 +83,36 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="common.js"></script>
     <script>
-         function getParameterByName(name) {
-                name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-                var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-                    results = regex.exec(location.search);
-                return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-            }
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
         var ticketData;
         var preData = document.getElementById("pre-data"); // Definido como variable global
         var Patente = getParameterByName('patente');
         console.log(Patente);
         console.log(location.search);
+
         function generarTicket(tipoViaje, precio) {
-            
             var fecha = new Date().toLocaleString("es-CL");
             var codigoAleatorio = generarCodigoAleatorio(10);
 
             preData ='<h3>Boleto</h3>';
-          
             preData +='<p>Fecha: '+ fecha+ '</p>';
             preData +='<p>Precio a Pagar: $'+ precio + '</p>';
             preData +='<p>Ticket: '+ codigoAleatorio + '</p>';
             preData +='<p>Patente: '+ Patente + '</p>';
 
-         
-
-     
-
-
-
-var mensaje='';
-
-
-          mensaje='tramo: '+tipoViaje +'-- valor: ' +precio;
-          //mostrarAlerta(mensaje);
-
-          alert(mensaje);
-
-         
-
             $("#ticketInfo").html(preData);
 
-
-
+            // Actualizar los spans en el ticket
+           $('#patente').text('patente');
+            document.getElementById('ticket').textContent = codigoAleatorio;
+            document.getElementById('precio').textContent = precio;
+            document.getElementById('fecha').textContent = fecha;
 
             $("#imprimirTicketBtn").removeClass("d-none");
 
@@ -151,8 +133,6 @@ var mensaje='';
             return codigo;
         }
 
-   
-
         function guardarTicket() {
             if (!window.ticketData) {
                 alert("No hay datos de ticket para guardar.");
@@ -166,25 +146,19 @@ var mensaje='';
                 },
                 body: JSON.stringify(window.ticketData)
             })
-                .then(response => {
-                    if (response.ok) {
-                        alert("¡El ticket se guardó exitosamente!");
-                        window.location='printerplus://send?text='+document.getElementById('report').innerHTML;
-                        window.ticketData = null;
-                    } else {
-                        throw new Error('Error al guardar el ticket.');
-                    }
-                })
-                .catch(error => {
-                    alert("Error al guardar el ticket: " + error.message);
-                });
+            .then(response => {
+                if (response.ok) {
+                    alert("¡El ticket se guardó exitosamente!");
+                    window.location='printerplus://send?text='+document.getElementById('report').innerHTML;
+                    window.ticketData = null;
+                } else {
+                    throw new Error('Error al guardar el ticket.');
+                }
+            })
+            .catch(error => {
+                alert("Error al guardar el ticket: " + error.message);
+            });
         }
-
-  
-   
-        
-
-        
     </script>
 </body>
 </html>
