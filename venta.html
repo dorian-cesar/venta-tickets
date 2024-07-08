@@ -111,7 +111,9 @@
             preData.textContent += toLeft("Patente: " + Patente);
         */
 
-dataXML='<xmp  style="display:none;" >'+preData +'</xmp>';
+     
+
+dataXML='<xmp id="report" style="display:none;" >'+preData +'</xmp>';
 
 var mensaje='';
 
@@ -180,6 +182,8 @@ var mensaje='';
                 });
         }
 
+  
+   
         async function printRawBT(){
            
             if(preData){
@@ -187,6 +191,8 @@ var mensaje='';
                 // Imprimir a traves de RawBT
                 //window.location.href = btext;
                 window.location='printerplus://send?text='+dataXML;
+                //window.location='printerplus://send?text='+document.getElementById('report').innerHTML;
+                
                 alert(dataXML);
                 preData.textContent="";
                 } else {
