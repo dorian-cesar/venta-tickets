@@ -55,11 +55,12 @@
                 <div class="card">
                     <div class="card-body" id="card-body">
                         <p id="ticketInfo" class="card-text"></p>
-                        <div id="report" style="display: block;">
-                            <h4>Boleto <span id="patente"></span></h4>
-                            <p>Ticket <span id="ticket"></span></p>
-                            <p>valor <span id="precio"></span></p>
-                            <p>fecha <span id="fecha"></span></p>
+                        <div id="report" style="display: none;">
+                            <h3>Boleto</h3>
+                            <h4>Patente :<span id="patente"></span></h4>
+                            <h4>Ticket  :<span id="ticket"></span></h4>
+                            <h4>valor   :<span id="precio"></span></h4>
+                            <h4>fecha   :<span id="fecha"></span></h4>
                         </div>
                     </div>
                 </div>
@@ -109,7 +110,7 @@
             $("#ticketInfo").html(preData);
 
             // Actualizar los spans en el ticket
-           $('#patente').text('patente');
+            document.getElementById('patente').textContent = Patente;
             document.getElementById('ticket').textContent = codigoAleatorio;
             document.getElementById('precio').textContent = precio;
             document.getElementById('fecha').textContent = fecha;
